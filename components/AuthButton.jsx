@@ -5,7 +5,6 @@ import { Button } from "./ui/button";
 import { CircleUser, LogIn, LogOutIcon } from "lucide-react";
 import { AuthModal } from "./AuthModal";
 import { signOut } from "@/app/action";
-import { Tooltip, TooltipTrigger, TooltipContent } from "./ui/tooltip";
 
 const AuthButton = ({ user }) => {
   // console.log("AuthButton user:", user);
@@ -24,21 +23,14 @@ const AuthButton = ({ user }) => {
         </div>
 
         <form action={signOut}>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                variant="ghost"
-                size="sm"
-                type="submit"
-                className="gap-2 hover"
-              >
-                <LogOutIcon size={15} />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Logout</p>
-            </TooltipContent>
-          </Tooltip>
+          <Button
+            variant="ghost"
+            size="sm"
+            type="submit"
+            className="gap-2 hover"
+          >
+            <LogOutIcon size={15} />
+          </Button>
         </form>
       </div>
     );
