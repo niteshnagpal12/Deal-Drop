@@ -2,22 +2,45 @@
 
 import React, { useState } from "react";
 import { Button } from "./ui/button";
-import { LogIn } from "lucide-react";
+import { CircleUser, LogIn, LogOutIcon } from "lucide-react";
 import { AuthModal } from "./AuthModal";
 import { signOut } from "@/app/action";
+import { Tooltip, TooltipTrigger, TooltipContent } from "./ui/tooltip";
 
 const AuthButton = ({ user }) => {
   // console.log("AuthButton user:", user);
   // local state for showing modal
   const [showAuthModal, setShowAuthModal] = useState(false);
 
+  // fetching the user name from the email
+  const userName = user?.email.split("@")[0];
+
   if (user) {
     return (
-      <form action={signOut}>
-        <Button variant="ghost" size="sm" type="submit" className="gap-2">
-          Sign out
-        </Button>
-      </form>
+      <div className="flex ">
+        <div className="flex gap-2 items-center">
+          {" "}
+          <CircleUser size={16} /> Hi {userName}
+        </div>
+
+        <form action={signOut}>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="ghost"
+                size="sm"
+                type="submit"
+                className="gap-2 hover"
+              >
+                <LogOutIcon size={15} />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Logout</p>
+            </TooltipContent>
+          </Tooltip>
+        </form>
+      </div>
     );
   }
 
