@@ -60,6 +60,9 @@ export function AuthModal({ isOpen, onClose }) {
             </svg>
             Continue with Google
           </Button>
+          <p className="text-xs text-gray-600 mt-4 mx-auto">
+            Don&apos;t worry 😉, we&apos;ll only send price drop email alerts🔔
+          </p>
         </div>
       </DialogContent>
     </Dialog>

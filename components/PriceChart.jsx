@@ -17,13 +17,13 @@ const PriceChart = ({ productId }) => {
   // local state for setting chart data and loading flag
   const [chartData, setChartData] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const [currencyValue, setCurrencyValue] = useState("INR");
   useEffect(() => {
     const priceHistoryData = async () => {
       setLoading(true);
       try {
         const result = await getPriceHistory(productId);
-        console.log("Price history result:", result[0]);
+        setCurrencyValue(result[0]?.currency);
         const chartData = result.map((item) => ({
           date: new Date(item.checked_at).toLocaleDateString(),
           price: parseFloat(item.price),
@@ -61,12 +61,43 @@ const PriceChart = ({ productId }) => {
     );
   }
 
+  function CustomTooltip({ payload, label, active }) {
+    if (active && payload && payload.length) {
+      return (
+        <div
+          className="custom-tooltip"
+          style={{
+            border: "1px solid #888787",
+            borderRadius: "2px",
+            backgroundColor: "#fff",
+            boxShadow: "none",
+          }}
+        >
+          <div className="label" style={{ padding: "6px" }}>
+            <div>
+              <span style={{ fontSize: "14px" }}>{`${label}`}</span>
+            </div>
+            <div>
+              Price:&nbsp;
+              <b>
+                <span style={{ fontSize: "12px" }}>{currencyValue}</span>&nbsp;
+                {`${payload[0].value}`}
+              </b>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    return null;
+  }
+
   return (
     <div className="w-full">
       <h4 className="text-sm font-semibold mb-4 text-gray-700">
         Price History
       </h4>
-      <ResponsiveContainer width="100%" height={200}>
+      <ResponsiveContainer width="100%" height={120}>
         <LineChart data={chartData}>
           <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
           <XAxis dataKey="date" tick={{ fontSize: 12 }} stroke="#9ca3af" />
@@ -77,13 +108,14 @@ const PriceChart = ({ productId }) => {
               border: "1px solid #e5e7eb",
               borderRadius: "6px",
             }}
+            content={CustomTooltip}
           />
           <Line
             type="monotone"
             dataKey="price"
             stroke="#FA5D19"
             strokeWidth={2}
-            dot={{ fill: "#FA5D19", r: 4 }}
+            dot={{ fill: "#FA5D19", r: 2 }}
             activeDot={{ r: 6 }}
           />
         </LineChart>
