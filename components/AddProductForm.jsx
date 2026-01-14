@@ -49,7 +49,7 @@ const AddProductForm = ({ user }) => {
       <form onSubmit={handleSubmit} className="w-full max-w-2xl mx-auto">
         <div className="flex flex-col sm:flex-row gap-2">
           <Input
-            type="url"
+            type="text"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             placeholder="Enter product URL (Amazon, flipkart, etc.)"

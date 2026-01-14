@@ -12,9 +12,15 @@ export async function signOut(formData) {
   redirect("/");
 }
 
+// handler to trim url
+function extractUrl(text) {
+  const match = text.match(/https?:\/\/[^\s),]+/);
+  return match ? match[0] : null;
+}
+
 // function to add the scraped product to the database
 export async function addProdcut(formData) {
-  const url = formData.get("url");
+  const url = extractUrl(formData.get("url"));
 
   if (!url) {
     return { error: "URL is required" };
