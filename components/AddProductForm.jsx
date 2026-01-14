@@ -5,12 +5,14 @@ import { Button } from "./ui/button";
 import { AuthModal } from "./AuthModal";
 import { addProdcut } from "@/app/action";
 import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
+import { CircleAlert, Loader2 } from "lucide-react";
+import { Dialog, DialogHeader, DialogTitle, DialogContent } from "./ui/dialog";
 
 const AddProductForm = ({ user }) => {
   const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,7 +32,10 @@ const AddProductForm = ({ user }) => {
 
     // checking if the result has error or success
     if (result.error) {
-      toast.error(result.error);
+      console.log("error", result.error);
+      // toast.error(result.error, { duration: 5000 });
+      setShowErrorModal(true);
+      setUrl("");
     } else {
       toast.success("Product added successfully!");
       setUrl("");
@@ -75,6 +80,21 @@ const AddProductForm = ({ user }) => {
         isOpen={showAuthModal}
         onClose={() => setShowAuthModal(false)}
       />
+      {/* Scrapping Error Modal */}
+      <Dialog open={showErrorModal} onOpenChange={setShowErrorModal}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-1 text-orange-600">
+              <CircleAlert size={15} />
+              Product Tracking Unavailable
+            </DialogTitle>
+          </DialogHeader>
+          <p className="text-sm text-muted-foreground">
+            Due to website restrictions, this product cannot be tracked right
+            now, please try a different product or try again later.
+          </p>
+        </DialogContent>
+      </Dialog>
     </>
   );
 };

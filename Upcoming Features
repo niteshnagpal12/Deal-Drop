@@ -1,0 +1,12 @@
+Following features/changes to be implemented
+
+1. add username on the top right beside the , done
+2. make the "authorization" to "Authorizaion" in route.js, done
+3. for the new comer, display all the features to make them understand easily
+4. make sure to inform user that you'll get the email once it's changed/dropped
+5. send a welcoming email to first time login user to shwcase the list of features this application provides and how it works
+6. Add .gitignore file
+7. modify the chart to show axis values and also make the chart small in height
+
+// curl.exe -X POST "http://localhost:3000/api/cron/check-prices" -H "authorization: Bearer 37d7b56eaf5cfb3b24f085c3fa4fae59a8c55beb444d5f510607a88310f84672"
+// curl.exe -X POST "https://trackandgetbestdeal.vercel.app/api/cron/check-prices" -H "authorization: Bearer 37d7b56eaf5cfb3b24f085c3fa4fae59a8c55beb444d5f510607a88310f84672"
