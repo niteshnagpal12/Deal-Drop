@@ -56,7 +56,7 @@ const ProductCard = ({ product }) => {
               {product.name}
             </h3>
 
-            <div className="flex items-baseline gap-2">
+            <div className="flex items-baseline gap-2 flex-wrap">
               <span className="text-3xl font-bold text-orange-500">
                 {product.currency} {product.current_price}
               </span>
