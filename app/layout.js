@@ -16,6 +16,11 @@ export const metadata = {
   title: "Deal Drop App",
   description:
     "Track product prices across e-commerce sites and get alerts on price drops",
+  icons: {
+    icon: "/favicon-16x16.png",
+    shortcut: "/favicon-16x16.png",
+    apple: "/apple-touch-icon.png",
+  },
 };
 
 export default function RootLayout({ children }) {

@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import { CircleAlert, Loader2 } from "lucide-react";
 import { Dialog, DialogHeader, DialogTitle, DialogContent } from "./ui/dialog";
 
-const AddProductForm = ({ user }) => {
+const AddProductForm = ({ user, urls }) => {
   const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
@@ -19,6 +19,13 @@ const AddProductForm = ({ user }) => {
 
     if (!user) {
       setShowAuthModal(true);
+      return;
+    }
+
+    // checking if the url is already added
+    if (urls.includes(url)) {
+      toast.info("Product already added!", { duration: 3000 });
+      setUrl("");
       return;
     }
 

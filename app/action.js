@@ -79,7 +79,7 @@ export async function addProdcut(formData) {
           updated_at: new Date().toISOString(),
         },
         {
-          onConflict: "user_id,url", //unique constraint on user id and url
+          onConflict: "user_id,url,name", //unique constraint on user id and url
           ignoreDuplicates: false, //always update the existing record
         }
       )

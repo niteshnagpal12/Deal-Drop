@@ -15,6 +15,8 @@ export default async function Home() {
 
   const products = user ? await getProducts() : [];
 
+  const productURLs = products.map((product) => product.url);
+
   const FEATURES = [
     {
       icon: Rabbit,
@@ -69,7 +71,7 @@ export default async function Home() {
             prices drop. Save money effortlessly.
           </p>
 
-          <AddProductForm user={user} />
+          <AddProductForm user={user} urls={productURLs} />
 
           {/* Features */}
           {products.length === 0 && (
