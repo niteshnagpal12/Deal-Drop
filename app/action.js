@@ -48,7 +48,11 @@ export async function addProdcut(formData) {
     }
 
     const newPrice = parseFloat(productData.currentPrice);
-    const currency = productData.currencyCode || "USD";
+    const currency = productData.currencyCode || "INR";
+
+    if (!newPrice) {
+      throw new Error("Failed to extract price from the provided URL");
+    }
 
     // get the products details from product table of supabase
     // check if the product exists to determine if it's an update

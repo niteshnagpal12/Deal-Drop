@@ -3,6 +3,11 @@ import { createClient } from "@supabase/supabase-js";
 import { scrapeProduct } from "@/lib/firecrawl";
 import { sendPriceDropEmail } from "@/lib/email";
 
+// sleep helper function
+const sleep = (ms) => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};
+
 export async function POST(request) {
   try {
     const authHeader = request.headers.get("Authorization");
@@ -15,7 +20,7 @@ export async function POST(request) {
     // Use service role to bypass RLS (row level security)
     const supabase = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL,
-      process.env.SUPABASE_SERVICE_ROLL_KEY
+      process.env.SUPABASE_SERVICE_ROLL_KEY,
     );
 
     // getting  all the prodcuts from the products table
@@ -35,7 +40,7 @@ export async function POST(request) {
     };
 
     // iterating through all the products to check their prices
-    for (const product of products) {
+    for (const [ind, product] of products.entries()) {
       try {
         const productData = await scrapeProduct(product.url);
 
@@ -84,7 +89,7 @@ export async function POST(request) {
                 user.email,
                 product,
                 oldPrice,
-                newPrice
+                newPrice,
               );
 
               if (emailResult.success) {
@@ -98,6 +103,12 @@ export async function POST(request) {
       } catch (error) {
         console.error(`Error processing product ${product.id}:`, error);
         results.failed++;
+        if (ind < products.length - 1) {
+          await sleep(5000);
+        }
+      }
+      if (ind < products.length - 1) {
+        await sleep(2000);
       }
     }
 
